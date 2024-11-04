@@ -1,0 +1,347 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+body.light {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    color: #212529;
+}
+
+body.dark {
+    background: linear-gradient(135deg, #212529, #343a40);
+    color: #f8f9fa;
+}
+
+.header-form-container {
+    width: 80%;
+    max-width: 600px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    background: #f8f9fa;
+}
+
+body.dark .header-form-container {
+    background: #343a40;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+h1 {
+    font-size: 1.5rem;
+}
+
+body.light h1 {
+    color: #343a40;
+}
+
+body.dark h1 {
+    color: #f8f9fa;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.formulaire {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.formulaire input, .formulaire select, .formulaire button, .formulaire textarea {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    resize: vertical;
+}
+
+body.light .formulaire input, body.light .formulaire select, body.light .formulaire button, body.light .formulaire textarea {
+    border: 1px solid #ced4da;
+    background: #e9ecef;
+    color: #495057;
+}
+
+body.dark .formulaire input, body.dark .formulaire select, body.dark .formulaire button, body.dark .formulaire textarea {
+    border: 1px solid #495057;
+    background: #495057;
+    color: #f8f9fa;
+}
+
+textarea {
+    height: 60px;
+}
+
+.container {
+    width: 80%;
+    max-width: 1000px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    background: #f8f9fa;
+    margin-top: 20px;
+}
+
+body.dark .container {
+    background: #343a40;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.devoirs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.devoir {
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+    background: linear-gradient(135deg, #dee2e6, #ced4da);
+    border: 1px solid #adb5bd;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.light .devoir {
+    background: linear-gradient(135deg, #dee2e6, #ced4da);
+    border: 1px solid #adb5bd;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+body.dark .devoir {
+    background: linear-gradient(135deg, #495057, #6c757d);
+    border: 1px solid #adb5bd;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.devoir::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 10px;
+    z-index: -1;
+    filter: blur(10px);
+}
+
+h2 {
+    font-size: 1.2rem;
+    margin: 0 0 20px;
+}
+
+body.light .devoir h2 {
+    color: #343a40;
+}
+
+body.dark .devoir h2 {
+    color: #f8f9fa;
+}
+
+p {
+    margin: 0;
+}
+
+body.light .devoir p {
+    color: #495057;
+}
+
+body.dark .devoir p {
+    color: #dee2e6;
+}
+
+.date-ajout {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    transition: color 0.3s ease;
+}
+
+body.light .date-ajout {
+    color: #6c757d;
+}
+
+body.dark .date-ajout {
+    color: #adb5bd;
+}
+
+#theme-switch, #toggle-form {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.light #theme-switch {
+    background-color: #343a40;
+    color: #f8f9fa;
+}
+
+body.dark #theme-switch {
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+
+#theme-switch:hover, #toggle-form:hover {
+    opacity: 0.8;
+}
+
+body.light #toggle-form {
+    background-color: #343a40;
+    color: #f8f9fa;
+}
+
+body.dark #toggle-form {
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+
+#formulaire {
+    display: none;
+}
+
+#formulaire.visible {
+    display: flex;
+}
+
+#sort-options {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: 1px solid #ced4da;
+    background-color: #e9ecef;
+    color: #495057;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark #sort-options {
+    background-color: #495057;
+    color: #f8f9fa;
+    border: 1px solid #adb5bd;
+}
+
+#sort-options:hover {
+    opacity: 0.8;
+}
+
+.edit-btn, .delete-btn {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+}
+
+.edit-btn {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+    body {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .header-form-container,
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    .controls {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .formulaire {
+        gap: 8px;
+    }
+
+    .formulaire input, .formulaire select, .formulaire button, .formulaire textarea {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    .devoirs {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .devoir {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+
+    .date-ajout {
+        font-size: 0.9rem;
+        gap: 5px;
+    }
+
+    #theme-switch, #toggle-form {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+    }
+
+    .edit-btn, .delete-btn {
+        font-size: 0.7rem;
+        padding: 5px 8px;
+    }
+}
