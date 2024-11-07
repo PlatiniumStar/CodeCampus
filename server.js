@@ -33,7 +33,10 @@ app.get('/devoirs', (req, res) => {
 app.post('/devoirs', (req, res) => {
     const devoirs = loadDevoirs();
     const newDevoir = req.body;
-    newDevoir.dateAjout = new Date().toISOString();
+    console.log("Received data on POST route")
+    console.log(newDevoir)
+    newDevoir.dateAjout = new Date().toISOString().split("T")[0];
+    newDevoir.id = devoirs.length
     devoirs.push(newDevoir);
     saveDevoirs(devoirs);
     res.status(201).json(newDevoir);
@@ -42,8 +45,11 @@ app.post('/devoirs', (req, res) => {
 app.put('/devoirs', (req, res) => {
     const devoirs = loadDevoirs();
     const updatedDevoir = req.body;
-    const index = devoirs.findIndex(devoir => devoir.dateAjout === updatedDevoir.dateAjout);
-    if (index !== -1) {
+    console.log("Received data on PUT route")
+    console.log(updatedDevoir)
+    const index = updatedDevoir.id
+    console.log(index)
+    if (index !== undefined) {
         devoirs[index] = updatedDevoir;
         saveDevoirs(devoirs);
         res.status(200).json(updatedDevoir);

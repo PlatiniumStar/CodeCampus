@@ -3,6 +3,10 @@ async function loadDevoirs() {
     return response.json();
 }
 
+
+let modeEdition = false;
+let indexDevoirAEditer
+
 async function enregistrerDevoir() {
     const matiere = document.getElementById("matiere").value;
     const titre = document.getElementById("titre").value;
@@ -11,35 +15,60 @@ async function enregistrerDevoir() {
 
     if (!matiere || !titre || !contenu || !date) return alert("Veuillez remplir tous les champs");
 
-    const newDevoir = {
-        matiere,
-        titre,
-        contenu,
-        date,
-    };
+    if (!modeEdition) { // Si nouveau devoir
+        const newDevoir = {
+            matiere,
+            titre,
+            contenu,
+            date,
+        };
+    
+        await fetch('/devoirs', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newDevoir)
+        })
+            .catch(error => console.error('Erreur lors de l\'ajout du devoir:', error));
+    
+        afficherDevoirs();
+    } else {
+        const id = document.getElementById("id-devoir").value
+        const dateAjout = document.getElementById("date-ajout") // Assure la persistance de dateAjout
+        
 
-    await fetch('/devoirs', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newDevoir)
-    })
-        .catch(error => console.error('Erreur lors de l\'ajout du devoir:', error));
+        const devoir = {
+            id,
+            matiere,
+            titre,
+            contenu,
+            date,
+            dateAjout
+        };
 
-    afficherDevoirs();
+        await fetch('/devoirs', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(devoir)
+        })
+            .catch(error => console.error('Erreur lors de la mise à jour du devoir:', error));
+    
+        afficherDevoirs(); // Met à jour l'affichage
+    }
 }
 
 async function afficherDevoirs() {
     const devoirs = await loadDevoirs();
     const container = document.getElementById("devoirs");
     container.innerHTML = "";
-
     devoirs.forEach((devoir, index) => {
         const devoirElem = document.createElement("div");
         devoirElem.classList.add("devoir");
         devoirElem.innerHTML = `
-            <h2>${devoir.titre}</h2>
+            <h2 class="devoirid-${devoir.id}">${devoir.titre}</h2>
             <p><strong>Matière :</strong> ${devoir.matiere}</p>
             <br>
             <p><strong>Contenu :</strong></p>
@@ -60,23 +89,19 @@ async function editDevoir(index) {
     const devoirs = await loadDevoirs();
     const devoir = devoirs[index];
 
+    document.getElementById("id-devoir").value = devoir.id
+    document.getElementById("date-ajout").value = devoir.dateAjout
     document.getElementById("matiere").value = devoir.matiere;
     document.getElementById("titre").value = devoir.titre;
     document.getElementById("contenu").value = devoir.contenu;
     document.getElementById("date").value = devoir.date;
-
-    devoir.dateAjout = devoir.dateAjout; // Assure la persistance de dateAjout
-
-    await fetch('/devoirs', {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(devoir)
-    })
-        .catch(error => console.error('Erreur lors de la mise à jour du devoir:', error));
-
-    afficherDevoirs(); // Met à jour l'affichage
+    const dateElement = document.getElementById("date").disabled = true
+    modeEdition = true;
+    indexDevoirAEditer = index;
+    const form = document.getElementById("formulaire");
+    if (!form.classList.contains("visible")) {
+        form.classList.add("visible")
+    }
 }
 
 
